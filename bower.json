@@ -1,0 +1,14 @@
+{
+  "name": "t-activity-result-item",
+  "description": "This component renders an activty item. The item is passed from page parent view who fetches results in multi avail call.",
+  "main": "t-activity-result-item.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
