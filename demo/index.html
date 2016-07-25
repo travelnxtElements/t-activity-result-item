@@ -1,29 +1,32 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <title>t-activity-result-item demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-
-    <link rel="import" href="../t-activity-result-item.html">
-
+    <link rel="import" href="../t-activity-result-page.html">
+    <link rel="import" href="../../t-header/t-header.html">
     <style is="custom-style" include="demo-pages-shared-styles">
+
     </style>
-  </head>
-  <body>
+</head>
 
-    <div class="vertical-section-container centered">
-      <h3>Basic t-activity-result-item Demo</h3>
-      <demo-snippet>
-        <template>
-          <t-activity-result-item></t-activity-result-item>
-        </template>
-      </demo-snippet>
-    </div>
+<body>
+    <template is="dom-bind" id="domBindTemplate">
+        <t-activity-result-page id="carResultPage"
+            api-base-url="http://qa-mystiquecode.tavisca.com/"
+            auth-token="dbqitxip3bfr2qtmxnzd0ndd"
+            search-id="914dbf9e-edc1-4d83-82fd-f72a271eb04c">
+            <t-header icon="arrow-back" url="#">
+                <!-- <t-activity-search-recap id="searchCriteriaRecap">
+                </t-activity-search-recap> -->
+            </t-header>
+        </t-activity-result-page>
+    </template>
+</body>
 
-  </body>
 </html>
