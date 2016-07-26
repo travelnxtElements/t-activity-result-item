@@ -11,22 +11,70 @@
     <link rel="import" href="../t-activity-result-page.html">
     <link rel="import" href="../../t-header/t-header.html">
     <style is="custom-style" include="demo-pages-shared-styles">
-
+        body {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 
 <body>
     <template is="dom-bind" id="domBindTemplate">
-        <t-activity-result-page id="carResultPage"
+        <t-activity-result-page id="activtyResultPage"
             api-base-url="http://qa-mystiquecode.tavisca.com/"
-            auth-token="dbqitxip3bfr2qtmxnzd0ndd"
-            search-id="914dbf9e-edc1-4d83-82fd-f72a271eb04c">
+            auth-token="ukrkqswnzfmdnyt22almbs3z"
+            search-id="8fcba3e5-e1b8-4d3f-85c3-1ecc84320981">
             <t-header icon="arrow-back" url="#">
-                <!-- <t-activity-search-recap id="searchCriteriaRecap">
-                </t-activity-search-recap> -->
+                <t-activity-search-recap id="searchCriteriaRecap">
+                </t-activity-search-recap>
             </t-header>
         </t-activity-result-page>
     </template>
 </body>
+<script type="text/javascript">
+        (function () {
 
+        window.addEventListener('WebComponentsReady', function(e) {
+            var searchCriteria = {
+                                "pickupLocation": {
+                                    "code": "LAS",
+                                    "name": "McCarran International Airport",
+                                    "cityName": "Las Vegas",
+                                    "countryCode": "US",
+                                    "countryName": "United States",
+                                    "geoCode": "36.0854,-115.15",
+                                    "id": 2102,
+                                    "stateCode": "NV",
+                                    "stateName": "Nevada",
+                                    "type": "Airport",
+                                    "additionalInfo": null,
+                                    "formattedAddress": "Las Vegas, NV, United States - McCarran International Airport (LAS)"
+                                },
+                                "pickupDate": "08/30/2016",
+                                "dropoffLocation": {
+                                    "code": "LAS",
+                                    "name": "McCarran International Airport",
+                                    "cityName": "Las Vegas",
+                                    "countryCode": "US",
+                                    "countryName": "United States",
+                                    "geoCode": "36.0854,-115.15",
+                                    "id": 2102,
+                                    "stateCode": "NV",
+                                    "stateName": "Nevada",
+                                    "type": "Airport",
+                                    "additionalInfo": null,
+                                    "formattedAddress": "Las Vegas, NV, United States - McCarran International Airport (LAS)"
+                                },
+                                "dropoffDate": "09/06/2016",
+                                "isDropoffLocationSame": true,
+                                "pickupTime": "11:00 AM",
+                                "dropoffTime": "11:00 AM"
+                            };
+            var template = document.getElementById('domBindTemplate');
+            template.$.activtyResultPage.searchCriteria = searchCriteria;
+            template.$.searchCriteriaRecap.data = searchCriteria;
+        });
+
+    })();
+</script>
 </html>

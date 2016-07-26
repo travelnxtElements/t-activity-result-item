@@ -25,6 +25,7 @@
                 filter-api="[[apiBaseUrl]]api/activity/filter/[[searchId]]/rates?token=[[authToken]]"
                 filter-results-api="[[apiBaseUrl]]api/activity/results/filter/[[searchId]]/rates?token=[[authToken]]"
                 with-filter
+                filter-display-settings="[[filterDisplaySettings]]"
                 search-icon="[[searchIcon]]"
                 filter-icon="[[filterIcon]]"
                 disable-filter-icon="[[disableFilterIcon]]"
@@ -148,6 +149,12 @@
                 list: {
                     type: Array,
                     value: []
+                },
+
+
+                filterDisplaySettings: {
+                    type: Array,
+                    value: ["showCategoryCount"]
                 }
 
             },
