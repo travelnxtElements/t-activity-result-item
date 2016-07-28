@@ -21,15 +21,18 @@
             <t-list
                 id="list"
                 auto
-                data-api="[[apiBaseUrl]]api/activity/results/[[searchId]]/rates?token=[[authToken]]"
+                data-api="[[apiBaseUrl]]api/activity/results/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable"
                 filter-api="[[apiBaseUrl]]api/activity/filter/[[searchId]]/rates?token=[[authToken]]"
-                filter-results-api="[[apiBaseUrl]]api/activity/results/filter/[[searchId]]/rates?token=[[authToken]]"
+                filter-results-api="[[apiBaseUrl]]api/activity/results/filter/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable"
                 with-filter
+                with-sorting
+                filter-search-label="[[filterSearchLabel]]"
                 filter-display-settings="[[filterDisplaySettings]]"
                 search-icon="[[searchIcon]]"
                 filter-icon="[[filterIcon]]"
                 disable-filter-icon="[[disableFilterIcon]]"
                 token-param="inventories"
+                sort-params="[[sortParams]]"
                 redirect-link="[[redirectLink]]"
                 currency="[[currency]]">
                 <template>
@@ -133,6 +136,36 @@
                     type: String,
                     value: 'USD'
                 },
+
+                /**
+                 * This is used to display label in placeholder of search filter
+                 * @type {String}
+                 */
+                filterSearchLabel: {
+                    type: String,
+                    value: 'Search activity name'
+                },
+
+                /**
+                 * This property defines the sort params
+                 * @type {Array}
+                 */
+                sortParams: {
+                    type: Array,
+                    value: [{ "key": "Name", "value": "$orderby=Name" }, { "key": "Price", "value": "$orderby=MinFare/Fare/Amount", "default": true}]
+                },
+
+                /**
+                 * This property sets the filter custom icon
+                 * @type {String}
+                 */
+                filterIcon: String,
+
+                /**
+                 * This Property sets search custom icon
+                 * @type {String}
+                 */
+                searchIcon: String,
 
                 /**
                  * Redirection Link is link to redirect after clicking book button
