@@ -10,6 +10,9 @@
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../t-activity-result-page.html">
     <link rel="import" href="../../t-header/t-header.html">
+    <link rel="import" href="../../t-header/t-activity-search-decorator.html">
+    <link rel="import" href="../../t-header/t-header-search-recap.html">
+    <link rel="import" href="../../t-shared-components/theme.html">
     <style is="custom-style" include="demo-pages-shared-styles">
         body {
             margin: 0;
@@ -23,10 +26,13 @@
         <t-activity-result-page id="activtyResultPage"
             api-base-url="http://qa-mystiquecode.tavisca.com/"
             auth-token="ukrkqswnzfmdnyt22almbs3z"
-            search-id="8fcba3e5-e1b8-4d3f-85c3-1ecc84320981">
+            search-id="52c7bf49-c695-468e-9365-c27d9fe5d9c9"
+            activity-recap-data="{{activityRecapData}}"
+            api-url-format="/api/Session/SESSIONKEY">
             <t-header icon="arrow-back" url="#">
-                <t-activity-search-recap id="searchCriteriaRecap">
-                </t-activity-search-recap>
+                <t-header-search-recap recap-data="{{activityRecapData}}">
+                </t-header-search-recap>
+                <t-activity-search-decorator id="searchCriteriaRecap" output="{{activityRecapData}}"></t-activity-search-decorator>
             </t-header>
         </t-activity-result-page>
     </template>
@@ -36,43 +42,26 @@
 
         window.addEventListener('WebComponentsReady', function(e) {
             var searchCriteria = {
-                                "pickupLocation": {
-                                    "code": "LAS",
-                                    "name": "McCarran International Airport",
-                                    "cityName": "Las Vegas",
-                                    "countryCode": "US",
-                                    "countryName": "United States",
-                                    "geoCode": "36.0854,-115.15",
-                                    "id": 2102,
-                                    "stateCode": "NV",
-                                    "stateName": "Nevada",
-                                    "type": "Airport",
-                                    "additionalInfo": null,
-                                    "formattedAddress": "Las Vegas, NV, United States - McCarran International Airport (LAS)"
-                                },
-                                "pickupDate": "08/30/2016",
-                                "dropoffLocation": {
-                                    "code": "LAS",
-                                    "name": "McCarran International Airport",
-                                    "cityName": "Las Vegas",
-                                    "countryCode": "US",
-                                    "countryName": "United States",
-                                    "geoCode": "36.0854,-115.15",
-                                    "id": 2102,
-                                    "stateCode": "NV",
-                                    "stateName": "Nevada",
-                                    "type": "Airport",
-                                    "additionalInfo": null,
-                                    "formattedAddress": "Las Vegas, NV, United States - McCarran International Airport (LAS)"
-                                },
-                                "dropoffDate": "09/06/2016",
-                                "isDropoffLocationSame": true,
-                                "pickupTime": "11:00 AM",
-                                "dropoffTime": "11:00 AM"
-                            };
+                                    "location": {
+                                        "code": "LAS",
+                                        "name": "McCarran International Airport",
+                                        "cityName": "Las Vegas",
+                                        "countryCode": "US",
+                                        "countryName": "United States",
+                                        "geoCode": "36.0854,-115.15",
+                                        "id": 2178,
+                                        "stateCode": "NV",
+                                        "stateName": "Nevada",
+                                        "type": "Airport",
+                                        "additionalInfo": null,
+                                        "formattedAddress": "Las Vegas, NV, United States - McCarran International Airport (LAS)"
+                                    },
+                                    "fromDate": "08/31/2016",
+                                    "toDate": "09/02/2016"
+                                };
             var template = document.getElementById('domBindTemplate');
             template.$.activtyResultPage.searchCriteria = searchCriteria;
-            template.$.searchCriteriaRecap.data = searchCriteria;
+            template.$.searchCriteriaRecap.input = searchCriteria;
         });
 
     })();

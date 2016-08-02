@@ -2,6 +2,10 @@
 <link rel="import" href="../t-sessionstorage/t-sessionstorage.html">
 <link rel="import" href="../t-list/t-list.html">
 <link rel="import" href="../t-notify/t-notify.html">
+<link rel="import" href="../iron-icons/places-icons.html" />
+<link rel="import" href="../t-search-overlay/t-search-overlay.html">
+<link rel="import" href="../t-header/t-header-search-recap.html">
+<link rel="import" href="../t-text-container/travel-element-styles.html">
 <link rel="import" href="t-activity-result-item.html">
 
 <dom-module id="t-activity-result-page">
@@ -15,7 +19,19 @@
         <t-notify id="notify"></t-notify>
 
         <content select="t-header"></content>
-            
+        
+
+        <t-search-overlay icon="[[activityIcon]]" id="loadingOverlay">
+            <div class="data">
+                <div class="font-12 text-center secondary-text overlayData">
+                    <t-header-search-recap recap-data="{{activityRecapData}}"></t-header-search-recap>
+                </div>
+            </div>
+            <div class="footer">
+                <img src="[[siteLogoUrl]]" title="[[siteLogoUrl]]" alt="" style="width:232px;">
+            </div>
+        </t-search-overlay>
+
         <div class="layout vertical flex">
             <t-list
                 id="list"
@@ -32,7 +48,10 @@
                 token-param="inventories"
                 sort-params="[[sortParams]]"
                 redirect-link="[[redirectLink]]"
-                currency="[[currency]]">
+                currency="[[currency]]"
+                on-list-population="_listPopulation"
+                no-results-found-message="[[noResultsFoundMessage]]"
+                no-results-filtered-message="[[noResultsFilteredMessage]]">
                 <template>
                 <div>
                     <t-activity-result-item 
@@ -44,18 +63,6 @@
                 </template>
             </t-list>
         </div>
-
-        <!-- <template is="dom-if" if="[[showInterstetial]]">
-            <t-search-overlay icon="maps:directions-boat" id="loadingOverlay" value="[[searchOverlayValue]]">
-                <div class="data">
-                    <t-hotel-search-recap hide-icon location="{{criteria.location}}" check-in="{{criteria.checkIn}}" check-out="{{criteria.checkOut}}" adult-count="{{criteria.adultCount}}" child-count="{{criteria.childCount}}">
-                    </t-hotel-search-recap>
-                </div>
-                <div class="footer">
-                    <img src="http://dev-capi.tavisca.com/NewUI/eva/Air/images/main-logo.png" alt="">
-                </div>
-            </t-search-overlay>
-        </template> -->
 
         <t-sessionstorage
             id="sessionStore"
@@ -82,6 +89,24 @@
                     type: Boolean,
                     value: false,
                     notify: true
+                },
+
+                /**
+                 * No results found message
+                 * @type {String}
+                 */
+                noResultsFoundMessage: {
+                    type: String,
+                    value: "We could not find any activities for your search."
+                },
+
+                /**
+                 * No results found after applying filters message
+                 * @type {String}
+                 */
+                noResultsFilteredMessage: {
+                    type: String,
+                    value: 'We could not find any activities for the filters you have applied.'
                 },
 
                 /**
@@ -175,9 +200,15 @@
                 },
 
 
+                activityIcon: {
+                    type: String,
+                    value: 'places:pool'
+                },
+
+
                 filterDisplaySettings: {
                     type: Array,
-                    value: ["showCategoryCount"]
+                    value: ['showCategoryCount']
                 }
 
             },
@@ -204,16 +235,24 @@
 
             /**
              * This is observer method and executed every time `authToken` or `searchId` changes
-             * @param  {[string, string, string]} visible Describes whether to display view or not
-             * @return {[Void]}
+             * @param  {String} authToken
+             * @param  {String} searchId
+             * @return {Void}
              */
             _updateActivityResults: function (authToken, searchId) {
                 if (!authToken || !searchId) {
                     return;
                 }
 
+                this.$.loadingOverlay.active = true;
+                this.$.loadingOverlay.value = 0;
                 this.$.list.generateList();
                 this.$.list.$.filter.generateFilter();
+            },
+
+            _listPopulation: function (argument) {
+                //ending the overlay
+                this.$.loadingOverlay.value = 100;
             },
 
             /**
