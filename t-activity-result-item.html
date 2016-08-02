@@ -23,7 +23,7 @@
         }
         </style>
 
-        <div class="layout horizontal section primary-text">
+        <div class="layout horizontal section primary-text" on-tap="_onItinerarySelect">
             <div class="imageArea">
                 <t-image src="{{itinerary.heroImageUrl}}"></t-image>
             </div>
@@ -53,6 +53,10 @@
              */
             itinerary : Object,
         },
+
+        _onItinerarySelect: function () {
+            this.fire('book-activity-itinerary', this.itinerary);
+        }
 
     });
     </script>
