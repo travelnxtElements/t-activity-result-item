@@ -18,8 +18,7 @@
 
         <t-notify id="notify"></t-notify>
 
-        <content select="t-header"></content>
-        
+        <content></content>        
 
         <t-search-overlay icon="[[activityIcon]]" id="loadingOverlay">
             <div class="data">
@@ -261,14 +260,17 @@
              * @return {[Void]}
              */
             _onBookItinerary: function (e) {
-                if (e && e.detail) {
+                if (!e || !e.detail) {
+                    return;
+                }
 
+                if (!this.itinerary || (this.itinerary.id !== e.detail.id)) {
                     this.itinerary = e.detail;
-
-                    this.fire('activity-select');
                     this.$.sessionStore.value = this.itinerary;
                     this.$.sessionStore.save();
                 }
+
+                this.fire('activity-select');
             },
 
             /**
