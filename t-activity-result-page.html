@@ -65,7 +65,7 @@
 
         <t-sessionstorage
             id="sessionStore"
-            key="Activity_Result_Data"
+            key="Activitie_Result_Data"
             api-url-format="[[apiUrlFormat]]"
             on-t-sessionstorage-load-success="_onSessionLoad">
         </t-sessionstorage>
@@ -214,7 +214,7 @@
 
             observers: [
                 '_visibleChange(visible)',
-                '_updateActivityResults(authToken, searchId)'
+                '_updateActivityResults(authToken, searchId, apiBaseUrl)'
             ],
 
             listeners: {
@@ -227,7 +227,7 @@
              * @return {[Void]}
              */
             _visibleChange: function (visible) {
-                if (visible && (!this.authToken || !this.searchId)) {
+                if (visible && (!this.authToken || !this.searchId || !this.apiBaseUrl)) {
                     this.fire('go-to-search');
                 }
             },
@@ -238,8 +238,8 @@
              * @param  {String} searchId
              * @return {Void}
              */
-            _updateActivityResults: function (authToken, searchId) {
-                if (!authToken || !searchId) {
+            _updateActivityResults: function (authToken, searchId, apiBaseUrl) {
+                if (!authToken || !searchId || !apiBaseUrl) {
                     return;
                 }
 
