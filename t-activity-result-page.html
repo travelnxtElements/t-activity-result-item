@@ -6,6 +6,8 @@
 <link rel="import" href="../t-search-overlay/t-search-overlay.html">
 <link rel="import" href="../t-header/t-header-search-recap.html">
 <link rel="import" href="../t-text-container/travel-element-styles.html">
+<link rel="import" href="../t-behavior/t-page-behavior.html">
+<link rel="import" href="../t-behavior/t-activity-page-behavior.html">
 <link rel="import" href="t-activity-result-item.html">
 
 <dom-module id="t-activity-result-page">
@@ -79,14 +81,19 @@
 
             is: 't-activity-result-page',
 
+            behaviors: [
+                TravelNxt.Behaviors.PageBehavior,
+                TravelNxt.Behaviors.ActivityPageBehavior
+            ],
+
             properties: {
-                /**
-                 * This is used to show hide the page view
-                 * @type {Boolean}
+
+                /*
+                 * <p>This property holds the value of selected itinerary</p>
+                 * <p>It overrides behavior property</p>
                  */
-                visible: {
-                    type: Boolean,
-                    value: false,
+                itinerary: {
+                    type: Object,
                     notify: true
                 },
 
@@ -106,49 +113,6 @@
                 noResultsFilteredMessage: {
                     type: String,
                     value: 'We could not find any activities for the filters you have applied.'
-                },
-
-                /**
-                 * Authentication token required in query string to call api
-                 * @type {String}
-                 */
-                authToken: String,
-
-                /**
-                 * This property holds the value of api base URL
-                 * @type {String}
-                 */
-                apiBaseUrl: String,
-
-                /**
-                 * This property holds the value of web api URL format
-                 * @type {String}
-                 */
-                apiUrlFormat: String,
-
-                /**
-                 * This is used to store the itinerary which user has chosen to book
-                 * @type {Object}
-                 */
-                itinerary: {
-                    type: Object,
-                    notify: true
-                },
-
-                /*
-                 * <p>This string is query string containing token value</p>
-                */
-                searchId: {
-                    type: String
-                },
-
-                /**
-                 * Curreny pf fare is passed here
-                 * @type {String}
-                 */
-                currency: {
-                    type: String,
-                    value: 'USD'
                 },
 
                 /**
@@ -199,17 +163,10 @@
                 },
 
 
-                activityIcon: {
-                    type: String,
-                    value: 'places:pool'
-                },
-
-
                 filterDisplaySettings: {
                     type: Array,
                     value: ['showCategoryCount']
                 }
-
             },
 
             observers: [
