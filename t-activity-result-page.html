@@ -50,7 +50,7 @@
                 sort-params="[[sortParams]]"
                 redirect-link="[[redirectLink]]"
                 currency="[[currency]]"
-                on-list-population="_listPopulation"
+                on-list-population="_onListPopulation"
                 no-results-found-message="[[noResultsFoundMessage]]"
                 no-results-filtered-message="[[noResultsFilteredMessage]]">
                 <template>
@@ -68,8 +68,7 @@
         <t-sessionstorage
             id="sessionStore"
             key="Activitie_Result_Data"
-            api-url-format="[[apiUrlFormat]]"
-            on-t-sessionstorage-load-success="_onSessionLoad">
+            api-url-format="[[apiUrlFormat]]">
         </t-sessionstorage>
     </template>
     <script>
@@ -162,7 +161,9 @@
                     type: String
                 },
 
-
+                /**
+                 * stores the value of filter display setting
+                 */
                 filterDisplaySettings: {
                     type: Array,
                     value: ['showCategoryCount']
@@ -170,8 +171,8 @@
             },
 
             observers: [
-                '_visibleChange(visible)',
-                '_updateActivityResults(authToken, searchId, apiBaseUrl)'
+                '__visibleChange(visible)',
+                '__updateActivityResults(authToken, searchId, apiBaseUrl)'
             ],
 
             listeners: {
@@ -183,7 +184,7 @@
              * @param  {[Boolean]} visible Describes whether to display view or not
              * @return {[Void]}
              */
-            _visibleChange: function (visible) {
+            __visibleChange: function (visible) {
                 if (visible && (!this.authToken || !this.searchId || !this.apiBaseUrl)) {
                     this.fire('go-to-search');
                 }
@@ -195,7 +196,7 @@
              * @param  {String} searchId
              * @return {Void}
              */
-            _updateActivityResults: function (authToken, searchId, apiBaseUrl) {
+            __updateActivityResults: function (authToken, searchId, apiBaseUrl) {
                 if (!authToken || !searchId || !apiBaseUrl) {
                     return;
                 }
@@ -206,7 +207,11 @@
                 this.$.list.$.filter.generateFilter();
             },
 
-            _listPopulation: function (argument) {
+            /**
+             * This is observer method and executed when list is populated in `t-list`
+             * @return {Void}
+             */
+            _onListPopulation: function () {
                 //ending the overlay
                 this.$.loadingOverlay.value = 100;
             },
@@ -227,17 +232,7 @@
                     this.$.sessionStore.save();
                 }
 
-                this.fire('activity-select');
-            },
-
-            /**
-             * This is Event driven method, called when `t-sessionstorage-load-success` event is triggered. It restores the itinerary value from session
-             * @return {[Void]}
-             */
-            _onSessionLoad: function () {
-                if (this.$.sessionStore.value) {
-                    this.itinerary = this.$.sessionStore.value.itinerary;
-                }
+                this.fire('activity-select', e.detail);
             }
 
         })
