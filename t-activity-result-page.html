@@ -171,23 +171,11 @@
             },
 
             observers: [
-                '__visibleChange(visible)',
-                '__updateActivityResults(authToken, searchId, apiBaseUrl)'
+                '__pageLoad(visible, constructor)'
             ],
 
             listeners: {
                 'book-activity-itinerary': '_onBookItinerary'
-            },
-
-            /**
-             * This is observer method and executed every time `visible` changes
-             * @param  {[Boolean]} visible Describes whether to display view or not
-             * @return {[Void]}
-             */
-            __visibleChange: function (visible) {
-                if (visible && (!this.authToken || !this.searchId || !this.apiBaseUrl)) {
-                    this.fire('go-to-search');
-                }
             },
 
             /**
@@ -196,8 +184,8 @@
              * @param  {String} searchId
              * @return {Void}
              */
-            __updateActivityResults: function (authToken, searchId, apiBaseUrl) {
-                if (!authToken || !searchId || !apiBaseUrl) {
+            __pageLoad: function (visible, constructor) {
+                if (!visible || !constructor.authToken || !constructor.searchId || !constructor.apiBaseUrl) {
                     return;
                 }
 
