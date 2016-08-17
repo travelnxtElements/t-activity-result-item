@@ -171,7 +171,7 @@
             },
 
             observers: [
-                '__pageLoad(visible, constructor)'
+                '__pageLoad(visible, _constructor)'
             ],
 
             listeners: {
@@ -184,8 +184,8 @@
              * @param  {String} searchId
              * @return {Void}
              */
-            __pageLoad: function (visible, constructor) {
-                if (!visible || !constructor.authToken || !constructor.searchId || !constructor.apiBaseUrl) {
+            __pageLoad: function (visible, _constructor) {
+                if (!visible || !_constructor.authToken || !_constructor.searchId || !_constructor.apiBaseUrl) {
                     return;
                 }
 
