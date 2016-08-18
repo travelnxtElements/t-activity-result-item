@@ -171,7 +171,7 @@
             },
 
             observers: [
-                '__pageLoad(visible, _constructor)'
+                '__pageLoad(visible, constructor)'
             ],
 
             listeners: {
@@ -179,15 +179,17 @@
             },
 
             /**
-             * This is observer method and executed every time `authToken` or `searchId` changes
-             * @param  {String} authToken
-             * @param  {String} searchId
+             * This is observer method and executed every time `visible` or `constructor` changes
+             * @param  {String} visible
+             * @param  {String} constructor
              * @return {Void}
              */
-            __pageLoad: function (visible, _constructor) {
-                if (!visible || !_constructor.authToken || !_constructor.searchId || !_constructor.apiBaseUrl) {
+            __pageLoad: function (visible, constructor) {
+                if (!visible || !constructor.searchId) {
                     return;
                 }
+
+                this.searchId = constructor.searchId;
 
                 this.$.loadingOverlay.active = true;
                 this.$.loadingOverlay.value = 0;
