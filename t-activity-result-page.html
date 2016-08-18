@@ -96,6 +96,14 @@
                     notify: true
                 },
 
+                /*
+                 * <p>Private search id copy to detect search id change from search page</p>
+                */
+                _searchId: {
+                    type: String,
+                    readOnly: true
+                },
+
                 /**
                  * No results found message
                  * @type {String}
@@ -171,7 +179,7 @@
             },
 
             observers: [
-                '__pageLoad(visible, constructorObj)'
+                '__pageLoad(visible, searchId)'
             ],
 
             listeners: {
@@ -179,17 +187,23 @@
             },
 
             /**
-             * This is observer method and executed every time `visible` or `constructorObj` changes
+             * This is observer method and executed every time `visible` or `searchId` changes
              * @param  {String} visible
-             * @param  {String} constructorObj
+             * @param  {String} searchId
              * @return {Void}
              */
-            __pageLoad: function (visible, constructorObj) {
-                if (!visible || !constructorObj.searchId) {
+            __pageLoad: function (visible, searchId) {
+                if (!visible || !searchId) {
                     return;
                 }
 
-                this.searchId = constructorObj.searchId;
+                //route has been called again, data is already present
+                if (this._searchId === searchId) {
+                    return;
+                }
+
+                //update private copy
+                this._set_searchId(searchId);
 
                 this.$.loadingOverlay.active = true;
                 this.$.loadingOverlay.value = 0;
