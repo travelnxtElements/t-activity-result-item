@@ -36,9 +36,9 @@
         <div class="layout vertical flex">
             <t-list
                 id="list"
-                data-api="[[apiBaseUrl]]api/activity/results/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable,description,photoUrls"
+                data-api="[[apiBaseUrl]]api/activity/results/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable,Description,PhotoUrls"
                 filter-api="[[apiBaseUrl]]api/activity/filter/[[searchId]]/rates?token=[[authToken]]"
-                filter-results-api="[[apiBaseUrl]]api/activity/results/filter/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable,description,photoUrls"
+                filter-results-api="[[apiBaseUrl]]api/activity/results/filter/[[searchId]]/rates?$top=20&token=[[authToken]]&$select=Name,Category,MinFare,Id,Fare,HeroImageUrl,IsPostPaid,IsCancellable,Description,PhotoUrls"
                 with-filter
                 with-sorting
                 filter-search-label="[[filterSearchLabel]]"
