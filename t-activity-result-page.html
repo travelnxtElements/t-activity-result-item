@@ -16,6 +16,10 @@
             :host {
                 display: block;
             }
+            .result-item{
+                margin: var(--normal-spacing,10px);
+                margin-bottom: 0;
+            }
         </style>
 
         <t-notify id="notify"></t-notify>
@@ -56,6 +60,7 @@
                 <template>
                 <div>
                     <t-activity-result-item 
+                        class="result-item"
                         itinerary=[[item]]
                         price=[[minPrice]]
                         currency="[[currency]]">

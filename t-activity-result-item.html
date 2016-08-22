@@ -6,35 +6,54 @@
 <dom-module id="t-activity-result-item">
     <template>
         <style include="iron-flex"></style>
+        <style include="iron-positioning"></style>
         <style include="iron-flex-alignment"></style>
         <style include="travel-element-styles">
         :host {
             display: block;
+            color: var(--activity-result-color, #fff);
         }
-        .imageArea {
-            width: 70px;
-            height: 70px;
+        .main-section {
+            width: 100%;
+            height: 150px;
             position: relative;
         }
         
-        .imageArea t-image {
+        .imageArea {
             width: 100%;
             height: 100%;
         }
+        .content-section {
+            padding: var(--normal-spacing, 10px);
+            background: rgb(30,87,153); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(30,87,153,0) 0%, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(30,87,153,0) 0%,rgba(255,255,255,0) 0%,rgba(0,0,0,0.75) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(30,87,153,0) 0%,rgba(255,255,255,0) 0%,rgba(0,0,0,0.75) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#000000',GradientType=0 );
+        }
+        .price {
+            margin-left: 10px;
+        }
         </style>
 
-        <div class="layout horizontal section primary-text" on-tap="_onItinerarySelect">
-            <div class="imageArea">
-                <t-image src="{{itinerary.heroImageUrl}}"></t-image>
-            </div>
-            <div class="section-small layout horizontal">
-                <div class="flex layout vertical">
-                    <div>[[itinerary.name]]</div>
-                    <div>[[itinerary.category.name]]</div>
-                </div>
-                <div class="flex layout vertical">
-                    <div>from</div>
-                    <div>[[itinerary.minFare.fare.currency]]&nbsp;[[itinerary.minFare.fare.amount]]</div>
+        <div class="main-section" on-tap="_onItinerarySelect">
+            <t-image 
+                sizing="cover"
+                class="imageArea"
+                height="150" 
+                src="[[itinerary.heroImageUrl]]"
+                loading-icon="[[activityIcon]]">
+            </t-image>
+            <div class="content-section fit vertical layout end-justified">
+                <div class="horizontal layout font-14 font-light">
+                    <div class="flex">
+                        <div class="ellipsis-2">[[itinerary.name]]</div>
+                        <div class="ellipsis">[[itinerary.category.name]]</div>
+                    </div>
+                    <div class="price self-end">
+                        <div>from</div>
+                        <div>[[itinerary.minFare.fare.currency]]&nbsp;<span class="font-16 font-semi">[[itinerary.minFare.fare.amount]]</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,7 +70,13 @@
              * Itinerary is the API json object to pass in the component which will populate the data
              * @type {Object}
              */
-            itinerary : Object,
+            itinerary: Object,
+            
+            /**
+             * Pass the activityIcon to show an Icon when the image is not loaded or not available
+             * @type {String}
+             */
+            activityIcon: String
         },
 
         _onItinerarySelect: function () {
