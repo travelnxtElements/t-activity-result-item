@@ -3,6 +3,7 @@
 <link rel="import" href="../t-text-container/travel-element-styles.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../t-shared-lib/t-fare-behavior.html">
+<link rel="import" href="../juicy-html/juicy-html.html">
 <dom-module id="t-activity-result-item">
     <template>
         <style include="iron-flex"></style>
@@ -47,7 +48,9 @@
             <div class="content-section fit vertical layout end-justified">
                 <div class="horizontal layout font-14 font-light">
                     <div class="flex">
-                        <div class="ellipsis-2">[[itinerary.name]]</div>
+                        <div class="ellipsis-2">
+                            <template is="juicy-html" content$="[[itinerary.name]]"></template>
+                        </div>
                         <div class="ellipsis">[[itinerary.category.name]]</div>
                     </div>
                     <div class="price self-end">
