@@ -51,9 +51,9 @@
                 disable-filter-icon="[[disableFilterIcon]]"
                 token-param="inventories"
                 sort-params="[[sortParams]]"
-                redirect-link="[[redirectLink]]"
                 currency="[[currency]]"
                 on-list-population="_onListPopulation"
+                on-redirect-click="_handleRedirection"
                 no-results-found-message="[[noResultsFoundMessage]]"
                 no-results-filtered-message="[[noResultsFilteredMessage]]">
                 <template>
@@ -165,14 +165,6 @@
                 searchIcon: String,
 
                 /**
-                 * Redirection Link is link to redirect after clicking book button
-                 * @type {String}
-                 */
-                redirectLink: {
-                    type: String
-                },
-
-                /**
                  * stores the value of filter display setting
                  */
                 filterDisplaySettings: {
@@ -240,6 +232,10 @@
                 }
 
                 this.fire('activity-select', e.detail);
+            },
+
+            _handleRedirection: function (e) {
+                this.fire('go-to-search');
             }
 
         })
