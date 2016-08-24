@@ -47,13 +47,13 @@
             </t-image>
             <div class="content-section fit vertical layout end-justified">
                 <div class="horizontal layout font-14 font-light">
-                    <div class="flex">
+                    <div class="flex self-end">
                         <div class="ellipsis-2">
                             <template is="juicy-html" content$="[[itinerary.name]]"></template>
                         </div>
-                        <div class="ellipsis">[[itinerary.category.name]]</div>
+                        <!-- <div class="ellipsis">[[itinerary.category.name]]</div> -->
                     </div>
-                    <div class="price self-end">
+                    <div class="price">
                         <div>from</div>
                         <div>[[itinerary.minFare.fare.currency]]&nbsp;<span class="font-16 font-semi">[[itinerary.minFare.fare.amount]]</span></div>
                     </div>
