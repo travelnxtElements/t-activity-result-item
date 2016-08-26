@@ -8,6 +8,7 @@
 <link rel="import" href="../t-behavior/t-page-behavior.html">
 <link rel="import" href="../t-behavior/t-activity-page-behavior.html">
 <link rel="import" href="t-activity-result-item.html">
+<link rel="import" href="../t-behavior/t-session-behavior.html"/>
 
 <dom-module id="t-activity-result-page">
     <template>
@@ -70,8 +71,9 @@
 
         <t-sessionstorage
             id="sessionStore"
-            key="Activitie_Result_Data"
-            api-url-format="[[apiUrlFormat]]">
+            api-url-format="[[apiUrlFormat]]"
+            on-t-sessionstorage-load-success="_onSessionGet"
+            on-t-sessionstorage-save-success="_onSessionSave">
         </t-sessionstorage>
     </template>
     <script>
@@ -85,27 +87,11 @@
 
             behaviors: [
                 TravelNxt.Behaviors.PageBehavior,
-                TravelNxt.Behaviors.ActivityPageBehavior
+                TravelNxt.Behaviors.ActivityPageBehavior,
+                TravelNxt.Behaviors.SessionBehavior
             ],
 
             properties: {
-
-                /*
-                 * <p>This property holds the value of selected itinerary</p>
-                 * <p>It overrides behavior property</p>
-                 */
-                itinerary: {
-                    type: Object,
-                    notify: true
-                },
-
-                /*
-                 * <p>Private search id copy to detect search id change from search page</p>
-                */
-                _searchId: {
-                    type: String,
-                    readOnly: true
-                },
 
                 /**
                  * No results found message
@@ -174,7 +160,8 @@
             },
 
             observers: [
-                '__pageLoad(visible, searchId)'
+                '__pageLoad(visible)',
+                '__updatePage(searchId)'
             ],
 
             listeners: {
@@ -187,18 +174,19 @@
              * @param  {String} searchId
              * @return {Void}
              */
-            __pageLoad: function (visible, searchId) {
-                if (!visible || !searchId) {
+            __pageLoad: function (visible) {
+                if (!visible) {
                     return;
                 }
 
-                //route has been called again, data is already present
-                if (this._searchId === searchId) {
-                    return;
-                }
+                this._syncSession();
+            },
 
-                //update private copy
-                this._set_searchId(searchId);
+            __updatePage: function (searchId) {
+
+                if (!searchId) {
+                    this.fire('go-to-search');
+                }
 
                 this.$.loadingOverlay.active = true;
                 this.$.loadingOverlay.value = 0;
@@ -226,19 +214,37 @@
                 }
 
                 if (!this.itinerary || (this.itinerary.id !== e.detail.id)) {
-                    this.itinerary = e.detail;
-                    this.$.sessionStore.value = this.itinerary;
-                    this.$.sessionStore.save();
-                }
 
-                this.fire('activity-select', e.detail);
+                    this.itinerary = e.detail;
+
+                    this._data = [{
+                        key: 'Activitie_Itinerary',
+                        propertyName: 'itinerary',
+                        value: this.itinerary
+                    }];
+
+                    this.setSession();
+
+                    this.fire('activity-select', this.itinerary);
+                }
+            },
+
+            _syncSession: function () {
+                this._data = [{
+                    key: 'Activitie_Search_Criteria',
+                    propertyName: 'searchCriteria'
+                },{
+                    key: 'Activitie_Search_Id',
+                    propertyName: 'searchId'
+                }];
+                this.getSession();
             },
 
             _handleRedirection: function (e) {
                 this.fire('go-to-search');
             }
 
-        })
+        });
     })();
     </script>
 
