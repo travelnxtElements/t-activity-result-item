@@ -191,7 +191,20 @@
                 this.$.loadingOverlay.active = true;
                 this.$.loadingOverlay.value = 0;
                 this.$.list.generateList();
-                this.$.list.$.filter.generateFilter();
+                var filterComp = this.$.list.$.filter;
+
+                //TODO Resetting of filters should be handled in filter component
+                //code starts here
+                filterComp.appliedFilters = [];
+                if (filterComp.cachedFilters.length) {
+                    filterComp.cachedFilters.forEach(function (cache) {
+                        filterComp._resetElement(cache.element, cache.name);
+                    });
+                    filterComp.cachedFilters = [];
+                }
+                //code ends here
+
+                filterComp.generateFilter();
             },
 
             /**
